@@ -3,12 +3,9 @@ package income
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/personal-finance/domain/entity"
+	"github.com/personal-finance/pkg/utils"
 	"net/http"
 )
-
-type responseError struct {
-	Message string `json:"message"`
-}
 
 func (h *IncomeHandler) AddIncome(c echo.Context) error {
 
@@ -16,7 +13,7 @@ func (h *IncomeHandler) AddIncome(c echo.Context) error {
 	dataReq := entity.Income{}
 
 	if err := c.Bind(&dataReq); err != nil {
-		c.JSON(http.StatusBadRequest, responseError{
+		c.JSON(http.StatusBadRequest, utils.RestBody{
 			Message: "invalid data request",
 		})
 		return echo.ErrBadRequest
@@ -24,13 +21,13 @@ func (h *IncomeHandler) AddIncome(c echo.Context) error {
 
 	err := h.incomeUseCase.AddIncome(ctx, &dataReq)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, responseError{
+		c.JSON(http.StatusInternalServerError, utils.RestBody{
 			Message: "internal error",
 		})
 
 		return echo.ErrInternalServerError
 	}
-	return c.JSON(http.StatusCreated, responseError{
+	return c.JSON(http.StatusCreated, utils.RestBody{
 		Message: "success create",
 	})
 }

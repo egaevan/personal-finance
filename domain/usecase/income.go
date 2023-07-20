@@ -7,4 +7,5 @@ import (
 
 type IncomeUseCase interface {
 	AddIncome(ctx context.Context, ett *entity.Income) error
+	GetIncome(ctx context.Context, userId int) ([]*entity.Income, error)
 }
