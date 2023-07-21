@@ -7,13 +7,15 @@ import (
 	"net/http"
 )
 
-func (h *IncomeHandler) AddIncome(c echo.Context) error {
+func (h *IncomeHandler) PutIncome(c echo.Context) error {
 
 	ctx := c.Request().Context()
-	dataReq := entity.Income{}
-
 	reqId := c.Param("userId")
+	id := c.Param("id")
 	userId := utils.ConvertStrToInt(reqId)
+	incomeId := utils.ConvertStrToInt(id)
+
+	dataReq := entity.Income{}
 
 	if err := c.Bind(&dataReq); err != nil {
 		c.JSON(http.StatusBadRequest, utils.RestBody{
@@ -22,9 +24,7 @@ func (h *IncomeHandler) AddIncome(c echo.Context) error {
 		return echo.ErrBadRequest
 	}
 
-	dataReq.UserId = userId
-
-	err := h.incomeUseCase.AddIncome(ctx, &dataReq)
+	err := h.incomeUseCase.PutIncomeById(ctx, &dataReq, userId, incomeId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, utils.RestBody{
 			Message: "internal error",
@@ -32,7 +32,8 @@ func (h *IncomeHandler) AddIncome(c echo.Context) error {
 
 		return echo.ErrInternalServerError
 	}
-	return c.JSON(http.StatusCreated, utils.RestBody{
-		Message: "success create",
+
+	return c.JSON(http.StatusOK, utils.RestBody{
+		Message: "success",
 	})
 }

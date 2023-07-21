@@ -6,7 +6,6 @@ import (
 	"github.com/personal-finance/domain/entity"
 	"github.com/personal-finance/internal/repository/mapper"
 	"github.com/personal-finance/internal/repository/models"
-	"log"
 )
 
 func (i *IncomeRepository) InsertIncome(ctx context.Context, ett *entity.Income) error {
@@ -16,7 +15,6 @@ func (i *IncomeRepository) InsertIncome(ctx context.Context, ett *entity.Income)
 	_, err := i.db.ExecContext(ctx, query, req.UserId, req.TotalIncome, req.IncomeInformation)
 
 	if err != nil {
-		log.Println("ERR REPO : ", err.Error())
 		return err
 	}
 

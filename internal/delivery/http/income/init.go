@@ -15,6 +15,8 @@ func NewHandler(e *echo.Echo, incomeUC usecase.IncomeUseCase) {
 	}
 
 	income := e.Group("/income")
-	income.POST("/add", handler.AddIncome)
 	income.GET("/:userId", handler.GetIncome)
+	income.GET("/:userId/:id", handler.FindIncome)
+	income.POST("/:userId/add", handler.AddIncome)
+	income.PUT("/:userId/:id", handler.PutIncome)
 }

@@ -6,6 +6,8 @@ import (
 )
 
 type IncomeUseCase interface {
-	AddIncome(ctx context.Context, ett *entity.Income) error
+	AddIncome(ctx context.Context, req *entity.Income) error
 	GetIncome(ctx context.Context, userId int) ([]*entity.Income, error)
+	FindIncome(ctx context.Context, userId, id int) (*entity.Income, error)
+	PutIncomeById(ctx context.Context, req *entity.Income, userId, id int) error
 }
