@@ -1,3 +1,5 @@
 .idea
 .env
 .sh
+.vercel
+service.sh

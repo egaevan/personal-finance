@@ -1,5 +1,6 @@
 #!/bin/sh
 export APP_TIMEOUT="2"
+export APP_PORT=":8000"
 export DEBUG=true
 
 export MYSQL_USERNAME="root"
@@ -19,5 +20,5 @@ export DB_TIMEZONE="Asia/Singapore"
 export DB_MAX_CON_IDLE=10
 export DB_MAX_CON_OPEN=100
 
-go run cmd/main.go
+go run api/main.go
 # pause
