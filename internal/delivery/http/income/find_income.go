@@ -6,13 +6,15 @@ import (
 	"net/http"
 )
 
-func (h *IncomeHandler) GetIncome(c echo.Context) error {
+func (h *IncomeHandler) FindIncome(c echo.Context) error {
 
 	ctx := c.Request().Context()
 	reqId := c.Param("userId")
+	id := c.Param("id")
 	userId := utils.ConvertStrToInt(reqId)
+	incomeId := utils.ConvertStrToInt(id)
 
-	res, err := h.incomeUseCase.GetIncome(ctx, userId)
+	res, err := h.incomeUseCase.FindIncome(ctx, userId, incomeId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, utils.RestBody{
 			Message: "internal error",

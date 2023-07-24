@@ -1,4 +1,4 @@
-package models
+package entity
 
 import "time"
 
@@ -9,8 +9,4 @@ type Income struct {
 	IncomeInformation string    `json:"income_information"`
 	CreatedDate       time.Time `json:"created_at"`
 	UpdatedDate       time.Time `json:"updated_at"`
-}
-
-func (Income) GetTableName() string {
-	return `income`
 }
