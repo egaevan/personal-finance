@@ -17,7 +17,7 @@ func main() {
 
 	cfg := config.Server()
 
-	db, err := config.InitMysqlDB()
+	db, err := config.InitPgsqlDB()
 	if err != nil {
 		fmt.Println("Error connect to db")
 		log.Fatal(err)

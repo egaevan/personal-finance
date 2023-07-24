@@ -4,9 +4,11 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/lib/pq"
 	"github.com/personal-finance/pkg/config"
 	"net/url"
 	"os"
+	"strings"
 )
 
 func InitMysqlDB() (*sql.DB, error) {
@@ -37,4 +39,24 @@ func InitMysqlDB() (*sql.DB, error) {
 	dbConn.SetConnMaxLifetime(cfg.TimeOut)
 
 	return dbConn, nil
+}
+
+func InitPgsqlDB() (*sql.DB, error) {
+	cfg := config.DatabasePgSQL()
+	configs := []string{
+		"host=" + cfg.Host,
+		"user=" + cfg.User,
+		"password=" + cfg.Password,
+		"dbname=" + cfg.Database,
+		"port=" + cfg.Port,
+		"TimeZone=" + cfg.TimeZone,
+		"sslmode=require",
+		"search_path=" + cfg.Schema,
+	}
+	dsn := strings.Join(configs, " ")
+	db, err := sql.Open("postgres", dsn)
+	if err != nil {
+		return nil, err
+	}
+	return db, nil
 }

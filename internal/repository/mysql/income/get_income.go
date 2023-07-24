@@ -11,7 +11,7 @@ import (
 )
 
 func (i *IncomeRepository) GetIncome(ctx context.Context, userId int) ([]*entity.Income, error) {
-	query := fmt.Sprintf(`select id, user_id, income_information, total_income, created_at, updated_at from %s where user_id = ?`, models.Income{}.GetTableName())
+	query := fmt.Sprintf(`select id, user_id, income_information, total_income, created_at, updated_at from %s where user_id = $1`, models.Income{}.GetTableName())
 
 	rows, err := i.db.QueryContext(ctx, query, userId)
 
